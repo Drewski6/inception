@@ -1,0 +1,16 @@
+services:
+  serv:
+    build: ./requirements/nginx
+    # ports:
+    #   - "443:443"
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
+
+  # db:
+  #   build: ./mariadb
+  
+  # wp:
+  #   build: ./wordpress
