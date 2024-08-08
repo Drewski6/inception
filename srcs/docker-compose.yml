@@ -1,8 +1,8 @@
 services:
   serv:
     build: ./requirements/nginx
-    # ports:
-    #   - "443:443"
+    ports:
+      - "3000:80"
     stdin_open: true
     tty: true
     env_file:

@@ -19,6 +19,8 @@ clean:
 	docker volume prune -af &&\
 	docker network prune -f
 
+re: down clean all
+
 #############################################
 # TESTS										#
 #############################################
@@ -26,4 +28,4 @@ clean:
 test_serv:
 	docker compose -f ./srcs/docker-compose.yml exec serv sh
 
-.PHONY: all, down, status, clean, test_serv
+.PHONY: all, down, status, clean, re, test_serv
