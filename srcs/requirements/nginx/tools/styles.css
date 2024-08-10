@@ -1,9 +1,15 @@
 h3 {
     background-color: aqua;
     color: black;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
 }
 
 p {
-    background-color: rgb(175, 159, 16);
+    background-color: rgb(182, 27, 27);
     color: black;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
 }

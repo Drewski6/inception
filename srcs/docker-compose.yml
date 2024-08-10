@@ -8,9 +8,17 @@ services:
     env_file:
       - ../secrets/db_password.txt
       - ../secrets/db_root_password.txt
+    networks:
+      - inception_network
 
   # db:
   #   build: ./mariadb
   
   # wp:
   #   build: ./wordpress
+
+# volumes:
+
+networks:
+  inception_network:
+    driver: bridge
