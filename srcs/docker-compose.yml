@@ -1,6 +1,7 @@
 services:
-  serv:
+  nginx:
     build: ./requirements/nginx
+    image: nginx:1.0
     ports:
       - "3000:80"
     stdin_open: true
@@ -11,10 +12,15 @@ services:
     networks:
       - inception_net
 
-  db:
+  mariadb:
     build: ./requirements/mariadb
+    image: mariadb:1.0
     stdin_open: true
     tty: true
+    env_file:
+      - ../secrets/credentials.txt
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
     networks:
       - inception_net
   
