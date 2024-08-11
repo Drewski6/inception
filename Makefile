@@ -28,4 +28,7 @@ re: down clean all
 test_serv:
 	docker compose -f ./srcs/docker-compose.yml exec serv sh
 
+test_db:
+	docker compose -f ./srcs/docker-compose.yml exec db sh
+
 .PHONY: all, down, status, clean, re, test_serv

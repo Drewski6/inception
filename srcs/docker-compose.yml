@@ -11,8 +11,12 @@ services:
     networks:
       - inception_network
 
-  # db:
-  #   build: ./mariadb
+  db:
+    build: ./requirements/mariadb
+    stdin_open: true
+    tty: true
+    networks:
+      - inception_network
   
   # wp:
   #   build: ./wordpress
