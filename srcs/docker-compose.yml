@@ -1,7 +1,7 @@
 services:
   nginx:
     build: ./requirements/nginx
-    image: nginx:1.0
+    image: nginx:1.0.0
     ports:
       - "3000:80"
     stdin_open: true
@@ -14,7 +14,7 @@ services:
 
   mariadb:
     build: ./requirements/mariadb
-    image: mariadb:1.0
+    image: mariadb:1.0.0
     stdin_open: true
     tty: true
     env_file:
@@ -23,11 +23,16 @@ services:
       - ../secrets/db_root_password.txt
     networks:
       - inception_net
+    stop_grace_period: 1s
+    volumes:
+      - db_data:/var/lib/mysql
   
   # wp:
   #   build: ./wordpress
 
-# volumes:
+volumes:
+  db_data:
+    driver: local
 
 networks:
   inception_net:

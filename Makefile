@@ -26,9 +26,9 @@ re: down clean all
 #############################################
 
 serv_test:
-	docker compose -f ./srcs/docker-compose.yml exec serv sh
+	docker compose -f ./srcs/docker-compose.yml exec nginx sh
 
 db_test:
-	docker compose -f ./srcs/docker-compose.yml exec db sh
+	docker compose -f ./srcs/docker-compose.yml exec mariadb sh
 
 .PHONY: all, down, status, clean, re, serv_test, db_test

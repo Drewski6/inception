@@ -1,18 +1,11 @@
 FROM alpine:3.19
 
 RUN apk update && \
-# openrc for rc-service, and mariadb
-    apk add openrc mariadb mariadb-client mariadb-server-utils && \
-    mkdir -p /run/openrc && \
-    touch /run/openrc/softlevel
-    # mkdir -p /var/lib/mysql && \
-    # chown -R mysql:mysql /var/lib/mysql && \
-    # mkdir -p /run/mysqld && \
-    # chown -R mysql:mysql /run/mysqld
+    apk add --no-cache mariadb mariadb-client mariadb-server-utils && \
+    mkdir -p /scripts
 
-#COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
-# COPY ./conf/mariadb-server.cnf /etc/my.cnf
+COPY ./tools/docker-entrypoint.sh /scripts/docker-entrypoint.sh
 
-# RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
+RUN chmod +x /scripts/docker-entrypoint.sh
 
-# CMD ["rc-service", "mariadb", "start"]
+ENTRYPOINT ["/scripts/docker-entrypoint.sh"]
