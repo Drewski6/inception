@@ -1,7 +1,8 @@
 services:
   nginx:
-    build: ./requirements/nginx
-    image: nginx:1.0.0
+    build: 
+      context: ./requirements/nginx
+    image: nginx:v1.0
     ports:
       - "3000:80"
     stdin_open: true
@@ -13,8 +14,9 @@ services:
       - inception_net
 
   mariadb:
-    build: ./requirements/mariadb
-    image: mariadb:1.0.0
+    build: 
+      context: ./requirements/mariadb
+    image: mariadb:v1.0
     stdin_open: true
     tty: true
     env_file:

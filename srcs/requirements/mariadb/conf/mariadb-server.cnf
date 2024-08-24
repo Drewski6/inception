@@ -3,12 +3,19 @@
 # Use it for options that only the server (but not clients) should see
 
 # this is read by the standalone daemon and embedded servers
-; [server]
+[server]
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-; skip-networking
+user = mysql
+port = 3306
+basedir = /usr
+datadir = /var/lib/mysql
+pid-file = /run/mysqld/mysqld.pid
 socket = /run/mysqld/mysqld.sock
+skip-networking = off
+max_allowed_packet = 64M
+log_error = /var/log/mysql/error.log
 
 [client]
 socket = /run/mysqld/mysqld.sock
