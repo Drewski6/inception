@@ -1,0 +1,41 @@
+services:
+  nginx:
+    build: 
+      context: ./requirements/nginx
+    image: nginx:v1.0
+    ports:
+      - "3000:80"
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
+    networks:
+      - inception_net
+
+  mariadb:
+    build: 
+      context: ./requirements/mariadb
+    image: mariadb:v1.0
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../secrets/credentials.txt
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
+    networks:
+      - inception_net
+    stop_grace_period: 1s
+    volumes:
+      - db_data:/var/lib/mysql
+  
+  # wp:
+  #   build: ./wordpress
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  inception_net:
+    driver: bridge
