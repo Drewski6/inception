@@ -29,8 +29,14 @@ services:
     volumes:
       - db_data:/var/lib/mysql
   
-  # wp:
-  #   build: ./wordpress
+  wordpress:
+    build: 
+      context: ./requirements/wordpress
+    image: wordpress:v1.0
+    stdin_open: true
+    tty: true
+    networks:
+      - inception_net
 
 volumes:
   db_data:
