@@ -35,6 +35,7 @@ services:
     image: wordpress:v1.0
     stdin_open: true
     tty: true
+    stop_grace_period: 1s
     networks:
       - inception_net
 
