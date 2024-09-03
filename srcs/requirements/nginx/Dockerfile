@@ -3,13 +3,20 @@ FROM alpine:3.19
 
 # Update and install required packages
 RUN apk update && \
-    apk add nginx openssl
+    apk add nginx openssl bash
 
 # Create directories
 RUN mkdir -p /etc/nginx/ssl && \
-    # sample_html directory is just for testing
-    mkdir -p /var/www/sample_html
-    # mkdir -p /run/nginx && \
+    # sample_html directory is just for testing static site
+    mkdir -p /var/www/sample_html && \
+    mkdir -p /var/www/html
+
+# Check if group exists before creating www-data
+RUN getent group nginx || addgroup -S nginx \
+    getent passwd nginx || adduser -S -G nginx nginx
+
+RUN chmod 755 /var/www/html && \
+    chown -R nginx:nginx /var/www/html
 
 # Generate SSL certificate
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=dpentlan.42.fr/UID=dpentlan"

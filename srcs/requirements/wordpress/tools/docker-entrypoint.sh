@@ -38,5 +38,7 @@ if [ ! -d /run/php ]; then
 	mkdir -p /run/php
 fi
 
+chown -R nginx:nginx /var/www/html
+
 exec /usr/sbin/php-fpm82 -F -R
 # exec bash
