@@ -14,14 +14,14 @@ echo "$(stamp) Starting MariaDB"
 #############################################################
 
 # Create /run/mysqld directory and set owner to mysql user.
-if [ -d "/run/mysqld" ]; then
-	echo "$(stamp) mysqld already present, skipping creation"
-	chown -R mysql:mysql /run/mysqld
-else
-	echo "$(stamp) mysqld not found, creating...."
-	mkdir -p /run/mysqld
-	chown -R mysql:mysql /run/mysqld
-fi
+# if [ -d "/run/mysqld" ]; then
+# 	echo "$(stamp) mysqld already present, skipping creation"
+# 	chown -R mysql:mysql /run/mysqld
+# else
+# 	echo "$(stamp) mysqld not found, creating...."
+# 	mkdir -p /run/mysqld
+# 	chown -R mysql:mysql /run/mysqld
+# fi
 
 # Create /var/lib/mysql directory and set owner to mysql user.
 if [ -d /var/lib/mysql/mysql ]; then
@@ -33,6 +33,7 @@ else
 
     mysql_install_db --user=mysql --datadir=/var/lib/mysql # > /dev/null
 
+	# might want to remove this
     echo "$(stamp) MariaDB root password: $MYSQL_ROOT_PASSWORD"
     echo "$(stamp) MariaDB password: $MYSQL_PASSWORD"
     echo "$(stamp) MariaDB user: $MYSQL_USER"

@@ -13,13 +13,19 @@ down:
 status:
 	docker ps -a && docker images && docker volume ls && docker network ls
 
-clean:
+clean: down
 	docker container prune -f &&\
 	docker image prune -af &&\
 	docker volume prune -af &&\
 	docker network prune -f
 
-re: down clean all
+fclean: clean
+	docker system prune -af
+
+re: fclean all
+
+# fast re (doesnt do docker system prune -af)
+fre: clean all
 
 #############################################
 # TESTS										#

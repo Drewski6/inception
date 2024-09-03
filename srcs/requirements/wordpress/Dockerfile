@@ -3,7 +3,7 @@ FROM alpine:3.19
 
 # Get bash, wget (for wordpress cli) and the php stuff
 RUN apk update && \
-    apk add bash wget php php-fpm php-mysqli php-phar
+    apk add bash wget php php-fpm php-mysqli php-phar php-iconv
 
 # Use wget to get the wp-cli, add exec and move to wp bin
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
@@ -18,8 +18,11 @@ RUN cd /var/www/html \
 	&& rm /var/www/html/wordpress-6.1.1.tar.gz
 
 # Give the ownership of the files to the user www-data
-# RUN chown -R www-data:www-data /var/www/*
+# NOTE for some reason not recognizing the www-data user or group
 # RUN chmod -R 755 /var/www/*
+# RUN addgroup -g 40 www-data
+# RUN adduser -u 40 -g www-data www-data
+# RUN chown -R www-data:www-data /var/www/*
 
 # Copy the wp-config.php file
 
