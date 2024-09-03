@@ -28,4 +28,15 @@ wp user create --allow-root \
 	--user_pass=${USER_PASS} ;
 fi
 
-exec bash
+# Flush that cache son!
+wp cache flush --allow-root
+
+# Set to english (best language)
+wp language core install en_US --activate
+
+if [ ! -d /run/php ]; then
+	mkdir -p /run/php
+fi
+
+exec /usr/sbin/php-fpm82 -F -R
+# exec bash

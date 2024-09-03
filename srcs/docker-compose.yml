@@ -37,6 +37,8 @@ services:
       - ../secrets/db_password.txt
       - ../secrets/db_root_password.txt
       - .env
+    expose:
+      - "9000"
     stop_grace_period: 1s
     networks:
       - inception_net
@@ -49,7 +51,7 @@ services:
       context: ./requirements/nginx
     image: nginx:v1.0
     ports:
-      - "3000:80"
+      - "443:443"
     stdin_open: true
     tty: true
     env_file:
