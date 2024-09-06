@@ -1,8 +1,10 @@
 #!/bin/bash
 
-set -eux
+# set -eux
+set -ux
 
 cd /var/www/html/wordpress
+ls -la
 
 # sleep 10
 
@@ -41,4 +43,3 @@ fi
 chown -R nginx:nginx /var/www/html
 
 exec /usr/sbin/php-fpm82 -F -R
-# exec bash

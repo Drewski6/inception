@@ -43,7 +43,7 @@ services:
     networks:
       - inception_net
     volumes:
-      - wp_data:/var/www/html
+      - wp_data:/var/www/html/wordpress
     depends_on:
       mariadb:
         condition: service_healthy
@@ -62,7 +62,7 @@ services:
     networks:
       - inception_net
     volumes:
-      - wp_data:/var/www/html
+      - wp_data:/var/www/html/wordpress
     depends_on:
       - wordpress
 
@@ -71,6 +71,10 @@ volumes:
     driver: local
   wp_data:
     driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/drew/data/wordpress'
 
 networks:
   inception_net:

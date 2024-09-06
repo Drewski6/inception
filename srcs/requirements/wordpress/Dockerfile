@@ -1,6 +1,10 @@
 # Penultimate version of alpine linux
 FROM alpine:3.19
 
+# Adding "edge" repo for php-fpm
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+
 # Get bash, wget (for wordpress cli) and the php stuff
 RUN apk update && \
     apk add bash wget php php-fpm php-mysqli php-phar php-iconv
@@ -34,6 +38,8 @@ RUN cd /var/www/html \
 # RUN chown -R nginx:nginx /var/www/*
 
 # Copy the wp-config.php file
+# COPY ./conf/www.conf /etc/php/php-fpm.d/www.conf
+COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 # Move the script into the container
 COPY ./tools/docker-entrypoint.sh /scripts/docker-entrypoint.sh
