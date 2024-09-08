@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+set -u
 
 stamp() {
 	echo "$(date '+%Y-%m-%d %H:%M:%S') 0 [info] inception:"

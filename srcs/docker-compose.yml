@@ -18,7 +18,7 @@ services:
     stop_grace_period: 1s
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
+    # restart: always
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping --host=localhost -p${MYSQL_ROOT_PASSWORD}"]
       interval: 5s
@@ -27,6 +27,7 @@ services:
       start_period: 5s
   
   wordpress:
+    container_name: wordpress
     build: 
       context: ./requirements/wordpress
     image: wordpress:v1.0
@@ -49,6 +50,7 @@ services:
         condition: service_healthy
 
   nginx:
+    container_name: nginx
     build: 
       context: ./requirements/nginx
     image: nginx:v1.0
@@ -68,8 +70,10 @@ services:
 
 volumes:
   db_data:
+    name: db_data
     driver: local
   wp_data:
+    name: wp_data
     driver: local
     driver_opts:
       type: 'none'

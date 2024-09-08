@@ -8,6 +8,7 @@ RUN mkdir -p /run/mysqld && \
     chown -R mysql:mysql /run/mysqld
 
 COPY ./tools/docker-entrypoint.sh /scripts/docker-entrypoint.sh
+COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
 RUN chmod +x /scripts/docker-entrypoint.sh
 

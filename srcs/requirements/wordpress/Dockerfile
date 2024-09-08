@@ -7,28 +7,28 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repos
 
 # Get bash, wget (for wordpress cli) and the php stuff
 RUN apk update && \
-    apk add bash wget php php-fpm php-mysqli php-phar php-iconv
+    apk add bash wget curl php php-fpm php-mysqli php-phar php-iconv
 
 # Use wget to get the wp-cli, add exec and move to wp bin
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \
 	&& mv wp-cli.phar /usr/local/bin/wp
 
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/html/wordpress
 
-# Check if group exists before creating www-data
-RUN getent group nginx || addgroup -S nginx && \
-    getent passwd nginx || adduser -S -G nginx nginx
+# Check if group exists before creating
+# RUN getent group nginx || addgroup -S nginx && \
+#     getent passwd nginx || adduser -S -G nginx nginx
 
-RUN chmod 755 /var/www/html && \
-    chown -R nginx:nginx /var/www/html
+# RUN chmod 755 /var/www/html && \
+#     chown -R nginx:nginx /var/www/html
 
 # Get the mariadb client and wordpress
 RUN apk add mariadb-client
-RUN wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/html
-RUN cd /var/www/html \
-	&& tar -xzf /var/www/html/wordpress-6.1.1.tar.gz \
-	&& rm /var/www/html/wordpress-6.1.1.tar.gz
+RUN wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/html/wordpress
+RUN cd /var/www/html/wordpress \
+	&& tar -xzf /var/www/html/wordpress/wordpress-6.1.1.tar.gz \
+	&& rm /var/www/html/wordpress/wordpress-6.1.1.tar.gz
 
 # Give the ownership of the files to the user nginx
 # NOTE for some reason not recognizing the nginx user or group
@@ -38,8 +38,8 @@ RUN cd /var/www/html \
 # RUN chown -R nginx:nginx /var/www/*
 
 # Copy the wp-config.php file
-# COPY ./conf/www.conf /etc/php/php-fpm.d/www.conf
-COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
+COPY ./conf/php-fpm.conf /etc/php83/php-fpm.conf
+COPY ./conf/www.conf /etc/php83/php-fpm.d/www.conf
 
 # Move the script into the container
 COPY ./tools/docker-entrypoint.sh /scripts/docker-entrypoint.sh
