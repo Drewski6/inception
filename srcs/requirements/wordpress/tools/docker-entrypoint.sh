@@ -60,12 +60,13 @@ echo "..MariaDB is up and running!"
 
 ############################################################################################
 
+# Making sure the [www-data] user and group exists
+addgroup -g 82 -s www-data 2>/dev/null
+adduser -u 82 -D -S -G www-data www-data 2>/dev/null
+
 # Setting up wordpress config file and setting up new WP user
 # First check if wordpress is already installed. Necessary when container restarts
 if ! $(wp core is-installed --allow-root --path=/var/www/html/wordpress); then
-	# Making sure the [www-data] user and group exists
-	addgroup -g 82 -s www-data 2>/dev/null
-	adduser -u 82 -D -S -G www-data www-data 2>/dev/null
 
 	# Getting adminer.php and adminer.css
 	# curl -o /var/www/html/adminer.php https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php
