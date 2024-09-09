@@ -16,26 +16,12 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 RUN mkdir -p /var/www/html/wordpress
 
-# Check if group exists before creating
-# RUN getent group nginx || addgroup -S nginx && \
-#     getent passwd nginx || adduser -S -G nginx nginx
-
-# RUN chmod 755 /var/www/html && \
-#     chown -R nginx:nginx /var/www/html
-
 # Get the mariadb client and wordpress
 RUN apk add mariadb-client
 RUN wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/html/wordpress
 RUN cd /var/www/html/wordpress \
 	&& tar -xzf /var/www/html/wordpress/wordpress-6.1.1.tar.gz \
 	&& rm /var/www/html/wordpress/wordpress-6.1.1.tar.gz
-
-# Give the ownership of the files to the user nginx
-# NOTE for some reason not recognizing the nginx user or group
-# RUN chmod -R 755 /var/www/*
-# RUN addgroup -g 40 nginx
-# RUN adduser -u 40 -g nginx nginx
-# RUN chown -R nginx:nginx /var/www/*
 
 # Copy the wp-config.php file
 COPY ./conf/php-fpm.conf /etc/php83/php-fpm.conf
