@@ -3,6 +3,8 @@
 #############################################
 
 all:
+	mkdir -p /home/$(USER)/data/wordpress || true && \
+	mkdir -p /home/$(USER)/data/mariadb || true && \
 	docker compose -f ./srcs/docker-compose.yml up -d
 
 up: all
@@ -27,6 +29,10 @@ re: fclean all
 
 # fast re (doesnt do docker system prune -af)
 fre: clean all
+
+rm_data:
+	docker volume rm wp_data || true &&\
+	docker volume rm db_data || true
 
 #############################################
 # TESTS										#

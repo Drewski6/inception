@@ -73,4 +73,11 @@ sudo ufw status
 ssh-keygen -t ed25519 -C "your_email@example.com"
 # then take the file at ~/.ssh/key.pub and paste it in github.
 
+# Configure git
+git config --global user.name "Drew"
+git config --global user.email "email@email.com"
+
+# change 127.0.0.1 localhost to 127.0.0.1 dpentlan.42.fr
+sudo vim /etc/hosts
+
 ```

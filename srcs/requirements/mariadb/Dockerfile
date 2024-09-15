@@ -5,7 +5,8 @@ RUN apk update && \
     mkdir -p /scripts
 
 RUN mkdir -p /run/mysqld && \
-    chown -R mysql:mysql /run/mysqld
+    chown -R mysql:mysql /run/mysqld && \
+    mkdir -p /var/log/mysql
 
 COPY ./tools/docker-entrypoint.sh /scripts/docker-entrypoint.sh
 COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
