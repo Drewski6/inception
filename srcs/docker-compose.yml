@@ -1,41 +1,90 @@
 services:
-  nginx:
-    build: 
-      context: ./requirements/nginx
-    image: nginx:v1.0
-    ports:
-      - "3000:80"
-    stdin_open: true
-    tty: true
-    env_file:
-      - ../secrets/db_password.txt
-      - ../secrets/db_root_password.txt
-    networks:
-      - inception_net
 
   mariadb:
+    container_name: mariadb
+    image: mariadb:v1.0
     build: 
       context: ./requirements/mariadb
-    image: mariadb:v1.0
     stdin_open: true
     tty: true
     env_file:
       - ../secrets/credentials.txt
       - ../secrets/db_password.txt
       - ../secrets/db_root_password.txt
+    expose:
+      - "3306"
     networks:
       - inception_net
     stop_grace_period: 1s
     volumes:
       - db_data:/var/lib/mysql
+    # restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping --host=localhost -p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 1s
+      retries: 20
+      start_period: 5s
   
-  # wp:
-  #   build: ./wordpress
+  wordpress:
+    container_name: wordpress
+    build: 
+      context: ./requirements/wordpress
+    image: wordpress:v1.0
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../secrets/credentials.txt
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
+      - .env
+    expose:
+      - "9000"
+    stop_grace_period: 1s
+    networks:
+      - inception_net
+    volumes:
+      - wp_data:/var/www/html/wordpress
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  nginx:
+    container_name: nginx
+    build: 
+      context: ./requirements/nginx
+    image: nginx:v1.0
+    ports:
+      - "443:443"
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
+    networks:
+      - inception_net
+    volumes:
+      - wp_data:/var/www/html/wordpress
+    depends_on:
+      - wordpress
 
 volumes:
   db_data:
+    name: db_data
     driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/dpentlan/data/mariadb'
+  wp_data:
+    name: wp_data
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/dpentlan/data/wordpress'
 
 networks:
   inception_net:
+    name: inception_net
     driver: bridge
