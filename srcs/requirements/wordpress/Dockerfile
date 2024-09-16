@@ -7,7 +7,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repos
 
 # Get bash, wget (for wordpress cli) and the php stuff
 RUN apk update && \
-    apk add bash wget curl php php-fpm php-mysqli php-phar php-iconv
+    apk add bash wget curl php php83-fpm php-mysqli php-phar php-iconv
 
 # Use wget to get the wp-cli, add exec and move to wp bin
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \

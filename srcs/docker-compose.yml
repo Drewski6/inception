@@ -16,6 +16,7 @@ services:
     networks:
       - inception_net
     stop_grace_period: 1s
+    restart: unless-stopped
     volumes:
       - db_data:/var/lib/mysql
     # restart: always
@@ -33,6 +34,7 @@ services:
     image: wordpress:v1.0
     stdin_open: true
     tty: true
+    restart: unless-stopped
     env_file:
       - ../secrets/credentials.txt
       - ../secrets/db_password.txt
@@ -58,6 +60,7 @@ services:
       - "443:443"
     stdin_open: true
     tty: true
+    restart: unless-stopped
     env_file:
       - ../secrets/db_password.txt
       - ../secrets/db_root_password.txt
