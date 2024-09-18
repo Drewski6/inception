@@ -38,9 +38,15 @@ if ! $(wp core is-installed --allow-root --path=/var/www/html/wordpress); then
 		--title="${SITE_TITLE}" \
 		--skip-email \
 		--path=/var/www/html/wordpress \
-		--admin_user=${ADMIN_USER} \
-		--admin_password=${ADMIN_PASSWORD} \
-		--admin_email=${ADMIN_EMAIL}
+		--admin_user=${PRIV_USER} \
+		--admin_password=${PRIV_PASSWORD} \
+		--admin_email=${PRIV_EMAIL}
+	
+	wp user create --allow-root \
+		${PUB_USER} \
+		${PUB_EMAIL} \
+		--role=author \
+		--user_pass=${PUB_PASSWORD}
 
 else
 	echo "..WordPress is already installed and configured!"
