@@ -19,9 +19,9 @@ RUN mkdir -p /var/www/html/wordpress
 # Get the mariadb client and wordpress
 RUN apk add mariadb-client
 RUN wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/html/wordpress
-RUN cd /var/www/html/wordpress \
-	&& tar -xzf /var/www/html/wordpress/wordpress-6.1.1.tar.gz \
-	&& rm /var/www/html/wordpress/wordpress-6.1.1.tar.gz
+RUN cd /var/www/html/wordpress && \
+	tar -xzf /var/www/html/wordpress/wordpress-6.1.1.tar.gz && \
+	rm /var/www/html/wordpress/wordpress-6.1.1.tar.gz
 
 # Copy the wp-config.php file
 COPY ./conf/php-fpm.conf /etc/php83/php-fpm.conf

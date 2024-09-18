@@ -19,7 +19,6 @@ services:
     restart: unless-stopped
     volumes:
       - db_data:/var/lib/mysql
-    # restart: always
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping --host=localhost -p${MYSQL_ROOT_PASSWORD}"]
       interval: 5s

@@ -8,11 +8,11 @@ stamp() {
 
 echo "$(stamp) Starting MariaDB"
 
-# might want to remove this
-echo "$(stamp) MariaDB root password: $MYSQL_ROOT_PASSWORD"
-echo "$(stamp) MariaDB password: $MYSQL_PASSWORD"
-echo "$(stamp) MariaDB user: $MYSQL_USER"
-echo "$(stamp) MariaDB database: $MYSQL_DATABASE"
+# For debugging, print some env vars
+# echo "$(stamp) MariaDB root password: $MYSQL_ROOT_PASSWORD"
+# echo "$(stamp) MariaDB password: $MYSQL_PASSWORD"
+# echo "$(stamp) MariaDB user: $MYSQL_USER"
+# echo "$(stamp) MariaDB database: $MYSQL_DATABASE"
 
 
 #############################################################
